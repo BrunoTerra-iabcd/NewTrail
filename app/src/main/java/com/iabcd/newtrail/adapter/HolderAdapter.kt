@@ -2,12 +2,13 @@ package com.iabcd.newtrail.adapter
 
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iabcd.newtrail.databinding.RowHolderBinding
 import com.iabcd.newtrail.model.Holder
 
-class HolderAdapter(private val items: List<Holder>) :
+class HolderAdapter(private val items: List<Holder>, private val onClick : (View) -> Unit) :
     RecyclerView.Adapter<HolderAdapter.HolderViewHolder>() {
 
     inner class HolderViewHolder(private val mBinder: RowHolderBinding) :
@@ -17,6 +18,7 @@ class HolderAdapter(private val items: List<Holder>) :
 
             mBinder.rowHolderTxtName.text = holder.name
             setParentGravity(position)
+            setCLickListener()
 
         }
 
@@ -25,6 +27,12 @@ class HolderAdapter(private val items: List<Holder>) :
                 mBinder.root.gravity = Gravity.START
             } else {
                 mBinder.root.gravity = Gravity.END
+            }
+        }
+
+        private fun setCLickListener(){
+            mBinder.rowHolderImage.setOnClickListener {
+                onClick(it)
             }
         }
 
