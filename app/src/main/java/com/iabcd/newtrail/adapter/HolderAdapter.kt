@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iabcd.newtrail.databinding.RowHolderBinding
 import com.iabcd.newtrail.model.Holder
 
-class HolderAdapter(private val items: List<Holder>, private val onClick : (View) -> Unit) :
+class HolderAdapter(private val items: List<Holder>, private val onClick : (View,Holder) -> Unit) :
     RecyclerView.Adapter<HolderAdapter.HolderViewHolder>() {
 
     inner class HolderViewHolder(private val mBinder: RowHolderBinding) :
@@ -18,7 +18,7 @@ class HolderAdapter(private val items: List<Holder>, private val onClick : (View
 
             mBinder.rowHolderTxtName.text = holder.name
             setParentGravity(position)
-            setCLickListener()
+            setCLickListener(holder)
 
         }
 
@@ -30,9 +30,9 @@ class HolderAdapter(private val items: List<Holder>, private val onClick : (View
             }
         }
 
-        private fun setCLickListener(){
+        private fun setCLickListener(holder: Holder){
             mBinder.rowHolderImage.setOnClickListener {
-                onClick(it)
+                onClick(it,holder)
             }
         }
 

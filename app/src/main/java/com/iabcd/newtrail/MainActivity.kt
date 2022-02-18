@@ -3,6 +3,7 @@ package com.iabcd.newtrail
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.graphics.Path
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -50,12 +51,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
 
-        mAdapter = HolderAdapter(generateValues()) {
+        mAdapter = HolderAdapter(generateValues()) { view, holder ->
 
             val pointers = IntArray(2)
-            it.getLocationOnScreen(pointers)
+            view.getLocationOnScreen(pointers)
 
             rocketViewModel.updateRocketPositionFromCLick(pointers)
+            rocketViewModel.currentHolder = holder
         }
 
         mBinder.activityMainRecyclerView.apply {
@@ -71,14 +73,14 @@ class MainActivity : AppCompatActivity() {
                 super.onScrolled(recyclerView, dx, dy)
 
                 if (rocketViewModel.isBinded())
-                rocketViewModel.updateRocketPositionOnScroll(dx,dy)
+                    rocketViewModel.updateRocketPositionOnScroll(dx, dy)
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_DRAGGING){
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                     rocketViewModel.isBeingScrolled = true
-                }else if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     rocketViewModel.isBeingScrolled = false
                 }
             }
@@ -93,25 +95,25 @@ class MainActivity : AppCompatActivity() {
         return items
     }
 
-    private fun collectRocketChanges(){
+    private fun collectRocketChanges() {
 
         lifecycleScope.launchWhenCreated {
 
             rocketViewModel.rocketCoordinates.collect {
 
-                if (rocketViewModel.isBinded()){
+                if (rocketViewModel.isBinded()) {
                     handleRocketMovement(it)
                 }
             }
         }
     }
 
-    private fun handleRocketMovement(coordinates : IntArray){
+    private fun handleRocketMovement(coordinates: IntArray) {
 
-        if(rocketViewModel.isBeingScrolled){
+        if (rocketViewModel.isBeingScrolled) {
             mBinder.activityMainViewRocket.x = coordinates[0].toFloat()
             mBinder.activityMainViewRocket.y = coordinates[1].toFloat()
-        }else{
+        } else {
             val animator = mBinder.activityMainViewRocket.animate().apply {
                 this.x(coordinates[0].toFloat())
                 this.y(coordinates[1].toFloat())
@@ -122,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleRocketAnimation(animator : ViewPropertyAnimator) {
+    private fun handleRocketAnimation(animator: ViewPropertyAnimator) {
 
         animator.setListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator?) {
@@ -131,6 +133,10 @@ class MainActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(p0: Animator?) {
                 mBinder.activityMainRecyclerView.suppressLayout(false)
+
+                startActivity(Intent(this@MainActivity, HolderActivity::class.java).apply {
+                    this.putExtra(HolderActivity.HOLDER_KEY,rocketViewModel.currentHolder!!.name)
+                })
             }
 
             override fun onAnimationCancel(p0: Animator?) {

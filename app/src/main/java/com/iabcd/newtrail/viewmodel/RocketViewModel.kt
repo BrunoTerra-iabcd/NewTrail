@@ -2,6 +2,8 @@ package com.iabcd.newtrail.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.transition.Hold
+import com.iabcd.newtrail.model.Holder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -12,6 +14,7 @@ class RocketViewModel(
 
     private var isBinded = false
     var isBeingScrolled = false
+    var currentHolder : Holder? = null
 
     private val _rocketCoordinates: MutableStateFlow<IntArray> =
         MutableStateFlow(intArrayOf(initialRocketX, initialRocketY))
