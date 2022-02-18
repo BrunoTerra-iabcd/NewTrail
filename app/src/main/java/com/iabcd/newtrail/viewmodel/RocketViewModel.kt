@@ -11,6 +11,7 @@ class RocketViewModel(
 ) : ViewModel() {
 
     private var isBinded = false
+    var isBeingScrolled = false
 
     private val _rocketCoordinates: MutableStateFlow<IntArray> =
         MutableStateFlow(intArrayOf(initialRocketX, initialRocketY))
