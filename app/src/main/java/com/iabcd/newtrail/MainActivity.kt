@@ -4,11 +4,16 @@ package com.iabcd.newtrail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iabcd.newtrail.adapter.HolderAdapter
 import com.iabcd.newtrail.databinding.ActivityMainBinding
 import com.iabcd.newtrail.model.Holder
+import com.iabcd.newtrail.viewmodel.RocketViewModel
+import com.iabcd.newtrail.viewmodel.RocketViewModelFactory
+import kotlinx.coroutines.flow.collect
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,16 +21,27 @@ class MainActivity : AppCompatActivity() {
         const val TAG = "Porsche"
     }
 
+    //Layout
     private val mBinder by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    //RecyclerView
     private lateinit var mAdapter: HolderAdapter
+
+    //ViewModel
+    private val rocketViewModel: RocketViewModel by viewModels {
+        RocketViewModelFactory(
+            mBinder.activityMainViewRocket.x.toInt(),
+            mBinder.activityMainViewRocket.x.toInt()
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mBinder.root)
         initRecyclerView()
+        collectRocketChanges()
     }
 
     private fun initRecyclerView() {
@@ -38,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "OFFSET X: ${pointers[0]}")
             Log.i(TAG, "OFFSET Y: ${pointers[1]}")
 
-            moveRocket(pointers)
+            rocketViewModel.updateRocketPositionFromCLick(pointers)
 
         }
 
@@ -57,7 +73,8 @@ class MainActivity : AppCompatActivity() {
                 Log.i(TAG, "onScrolled X: $dx")
                 Log.i(TAG, "onScrolled Y: $dy")
 
-                updateRocketPosition(dx, dy)
+                if (rocketViewModel.isBinded())
+                rocketViewModel.updateRocketPositionOnScroll(dx,dy)
             }
         })
     }
@@ -70,13 +87,14 @@ class MainActivity : AppCompatActivity() {
         return items
     }
 
-    private fun moveRocket(coordinates: IntArray) {
-        mBinder.activityMainViewRocket.x = coordinates[0].toFloat()
-        mBinder.activityMainViewRocket.y = coordinates[1].toFloat()
-    }
+    private fun collectRocketChanges(){
 
-    private fun updateRocketPosition(offSetX: Int, offSetY: Int) {
-        mBinder.activityMainViewRocket.x -= offSetX
-        mBinder.activityMainViewRocket.y -= offSetY
+        lifecycleScope.launchWhenCreated {
+
+            rocketViewModel.rocketCoordinates.collect {
+                mBinder.activityMainViewRocket.x = it[0].toFloat()
+                mBinder.activityMainViewRocket.y = it[1].toFloat()
+            }
+        }
     }
 }
