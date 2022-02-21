@@ -27,6 +27,5 @@ class HolderActivity : AppCompatActivity() {
         intent.extras?.getString(HOLDER_KEY)?.let {
             mBinder.activityHolderTxtTarget.text = it
         }
-
     }
 }

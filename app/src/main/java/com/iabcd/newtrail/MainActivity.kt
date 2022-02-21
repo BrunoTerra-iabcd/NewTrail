@@ -47,11 +47,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinder.root)
         initRecyclerView()
         collectRocketChanges()
+
+        mBinder.floatingActionButton.setOnClickListener {
+            startActivity(Intent(this, ComposeActivity::class.java))
+        }
     }
 
     private fun initRecyclerView() {
 
-        mAdapter = HolderAdapter(generateValues()) { view, holder ->
+        mAdapter = HolderAdapter(Holder.generateValues()) { view, holder ->
 
             val pointers = IntArray(2)
             view.getLocationOnScreen(pointers)
@@ -85,14 +89,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    private fun generateValues(): List<Holder> {
-        val items = mutableListOf<Holder>()
-        for (i in 0..45) {
-            items.add(Holder("Planeta $i"))
-        }
-        return items
     }
 
     private fun collectRocketChanges() {
