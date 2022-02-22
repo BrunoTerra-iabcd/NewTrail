@@ -76,8 +76,12 @@ class MainActivity : AppCompatActivity() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                if (rocketViewModel.isBinded())
-                    rocketViewModel.updateRocketPositionOnScroll(dx, dy)
+                mBinder.activityMainViewRocket.y -= dy
+                mBinder.imageView2.y -= dy
+                mBinder.imageView.y -= dy
+
+                rocketViewModel.updateRocketPositionOnScroll(dx, dy)
+
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -131,7 +135,7 @@ class MainActivity : AppCompatActivity() {
                 mBinder.activityMainRecyclerView.suppressLayout(false)
 
                 startActivity(Intent(this@MainActivity, HolderActivity::class.java).apply {
-                    this.putExtra(HolderActivity.HOLDER_KEY,rocketViewModel.currentHolder!!.name)
+                    this.putExtra(HolderActivity.HOLDER_KEY, rocketViewModel.currentHolder!!.name)
                 })
             }
 
