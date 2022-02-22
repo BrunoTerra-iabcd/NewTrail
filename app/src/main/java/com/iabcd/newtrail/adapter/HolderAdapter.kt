@@ -44,7 +44,7 @@ class HolderAdapter(private val items: List<Holder>, private val onClick: (View,
 
             if (random == 0 || random == 1) {
                 mBinder.rowHolderProp1.isVisible = true
-                mBinder.rowHolderProp1.x += Random.nextInt(-200, 200)
+                mBinder.rowHolderProp1.x += Random.nextInt(-100, 100)
             } else {
                 mBinder.rowHolderProp1.isVisible = false
             }

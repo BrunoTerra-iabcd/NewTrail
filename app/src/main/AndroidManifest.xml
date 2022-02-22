@@ -10,15 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewTrail">
         <activity
+            android:name=".CustomViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewModelActivity"
+            android:exported="false" />
+        <activity
             android:name=".ComposeActivity"
             android:exported="false"
             android:label="@string/title_activity_compose"
             android:theme="@style/Theme.NewTrail" />
         <activity
-            android:name=".HolderActivity"
+            android:name=".DigitalActivityActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ChoiceActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

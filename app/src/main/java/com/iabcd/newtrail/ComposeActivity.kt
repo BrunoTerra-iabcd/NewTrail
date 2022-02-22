@@ -31,23 +31,15 @@ class ComposeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-
-                    Scaffold(floatingActionButton = {
-                        ExtendedFloatingActionButton(
-                            text = { Text(text = "XML", color = Color.White) },
-                            onClick = { finish() })
-                    }
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 80.dp),
+                        reverseLayout = true
                     ) {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(bottom = 80.dp),
-                            reverseLayout = true
-                        ) {
-                            itemsIndexed(Holder.generateValues()) { index: Int, item ->
-                                Holder
-                                HolderActivity(holder = item, position = index)
-                            }
+                        itemsIndexed(Holder.generateValues()) { index: Int, item ->
+                            Holder
+                            HolderActivity(holder = item, position = index)
                         }
                     }
                 }

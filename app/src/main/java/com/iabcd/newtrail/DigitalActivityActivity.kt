@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.iabcd.newtrail.databinding.ActivityHolderBinding
 import com.iabcd.newtrail.databinding.ActivityMainBinding
 
-class HolderActivity : AppCompatActivity() {
+class DigitalActivityActivity : AppCompatActivity() {
 
     companion object {
         const val HOLDER_KEY = "holder_key"

@@ -17,7 +17,7 @@ import com.iabcd.newtrail.viewmodel.RocketViewModel
 import com.iabcd.newtrail.viewmodel.RocketViewModelFactory
 import kotlinx.coroutines.flow.collect
 
-class MainActivity : AppCompatActivity() {
+class ViewModelActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "Porsche"
@@ -44,10 +44,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinder.root)
         initRecyclerView()
         collectRocketChanges()
-
-        mBinder.floatingActionButton.setOnClickListener {
-            startActivity(Intent(this, ComposeActivity::class.java))
-        }
     }
 
     private fun initRecyclerView() {
@@ -64,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         mBinder.activityMainRecyclerView.apply {
             adapter = mAdapter
             layoutManager =
-                LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, true)
+                LinearLayoutManager(this@ViewModelActivity, LinearLayoutManager.VERTICAL, true)
             setHasFixedSize(true)
         }
 
@@ -138,8 +134,8 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(p0: Animator?) {
                 mBinder.activityMainRecyclerView.suppressLayout(false)
 
-                startActivity(Intent(this@MainActivity, HolderActivity::class.java).apply {
-                    this.putExtra(HolderActivity.HOLDER_KEY, rocketViewModel.currentHolder!!.name)
+                startActivity(Intent(this@ViewModelActivity, DigitalActivityActivity::class.java).apply {
+                    this.putExtra(DigitalActivityActivity.HOLDER_KEY, rocketViewModel.currentHolder!!.name)
                 })
             }
 
