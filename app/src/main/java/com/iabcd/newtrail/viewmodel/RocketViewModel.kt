@@ -15,13 +15,15 @@ class RocketViewModel(
     private var isBinded = false
     var isBeingScrolled = false
     var currentHolder : Holder? = null
+    var currentHolderPosition : Int? = null
 
     private val _rocketCoordinates: MutableStateFlow<IntArray> =
         MutableStateFlow(intArrayOf(initialRocketX, initialRocketY))
      val rocketCoordinates: Flow<IntArray> = _rocketCoordinates
 
-    fun updateRocketPositionFromCLick(coordinates: IntArray){
+    fun updateRocketPositionFromCLick(coordinates: IntArray,position : Int){
         isBinded = true
+        currentHolderPosition = position
         _rocketCoordinates.value = coordinates
     }
 

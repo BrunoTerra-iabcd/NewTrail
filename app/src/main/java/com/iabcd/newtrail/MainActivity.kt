@@ -2,12 +2,9 @@ package com.iabcd.newtrail
 
 
 import android.animation.Animator
-import android.animation.ObjectAnimator
 import android.content.Intent
-import android.graphics.Path
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.ViewPropertyAnimator
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -55,12 +52,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
 
-        mAdapter = HolderAdapter(Holder.generateValues()) { view, holder ->
+        mAdapter = HolderAdapter(Holder.generateValues()) { planetView, holder, position ->
 
             val pointers = IntArray(2)
-            view.getLocationOnScreen(pointers)
+            planetView.getLocationOnScreen(pointers)
 
-            rocketViewModel.updateRocketPositionFromCLick(pointers)
+            rocketViewModel.updateRocketPositionFromCLick(pointers,position)
             rocketViewModel.currentHolder = holder
         }
 
@@ -117,7 +114,14 @@ class MainActivity : AppCompatActivity() {
             val animator = mBinder.activityMainViewRocket.animate().apply {
                 this.x(coordinates[0].toFloat())
                 this.y(coordinates[1].toFloat())
-                this.duration = 800
+
+                if (rocketViewModel.currentHolderPosition!! % 2 == 0) {
+                    this.rotation(20f)
+                } else {
+                    this.rotation(-20f)
+                }
+
+                this.duration = 1000
             }
 
             handleRocketAnimation(animator)

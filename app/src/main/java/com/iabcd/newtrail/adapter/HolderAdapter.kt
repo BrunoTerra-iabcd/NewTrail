@@ -10,7 +10,7 @@ import com.iabcd.newtrail.databinding.RowHolderBinding
 import com.iabcd.newtrail.model.Holder
 import kotlin.random.Random
 
-class HolderAdapter(private val items: List<Holder>, private val onClick: (View, Holder) -> Unit) :
+class HolderAdapter(private val items: List<Holder>, private val onClick: (View, Holder, Int) -> Unit) :
     RecyclerView.Adapter<HolderAdapter.HolderViewHolder>() {
 
     inner class HolderViewHolder(private val mBinder: RowHolderBinding) :
@@ -20,7 +20,7 @@ class HolderAdapter(private val items: List<Holder>, private val onClick: (View,
 
             mBinder.rowHolderTxtName.text = holder.name
             setParentGravity(position)
-            setCLickListener(holder)
+            setCLickListener(holder, position)
             handleProps(position)
         }
 
@@ -32,9 +32,9 @@ class HolderAdapter(private val items: List<Holder>, private val onClick: (View,
             }
         }
 
-        private fun setCLickListener(holder: Holder) {
+        private fun setCLickListener(holder: Holder,position : Int) {
             mBinder.rowHolderImage.setOnClickListener {
-                onClick(it, holder)
+                onClick(it, holder,position)
             }
         }
 
