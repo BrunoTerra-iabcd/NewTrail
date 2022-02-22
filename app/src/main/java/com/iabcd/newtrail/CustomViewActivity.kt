@@ -26,12 +26,9 @@ class CustomViewActivity : AppCompatActivity() {
 
         mAdapter = HolderAdapter(Holder.generateValues()) { planetView, holder, position ->
 
-            val pointers = IntArray(2)
-            planetView.getLocationOnScreen(pointers)
-
             mBinder.activityCustomViewRecyclerView.suppressLayout(true)
 
-            mBinder.activityCustomViewRocketView.animateToCoordinates(pointers[0].toFloat(),pointers[1].toFloat(),position){
+            mBinder.activityCustomViewRocketView.animateToCoordinates(planetView,position){
                 mBinder.activityCustomViewRecyclerView.suppressLayout(false)
             }
         }
@@ -52,5 +49,4 @@ class CustomViewActivity : AppCompatActivity() {
             }
         })
     }
-
 }

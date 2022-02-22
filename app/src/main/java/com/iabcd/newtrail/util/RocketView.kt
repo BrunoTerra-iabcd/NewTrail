@@ -2,11 +2,9 @@ package com.iabcd.newtrail.util
 
 import android.animation.Animator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
 import android.util.AttributeSet
+import android.view.View
+import android.view.ViewPropertyAnimator
 import androidx.appcompat.widget.AppCompatImageView
 import com.iabcd.newtrail.R
 
@@ -16,15 +14,22 @@ class RocketView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
-    private var canLaunch = true
+    private var canExplore = true
+    private var currentPlanet: View? = null
 
-    fun animateToCoordinates(x: Float, y: Float,adapterPosition : Int,onFinish : () -> Unit) {
+    fun animateToCoordinates(planetView: View, adapterPosition: Int, onFinish: () -> Unit) {
 
-        if (!canLaunch) return
+        if (!canExplore) return
+
+        attachToPlanet(planetView)
 
         this.animate().apply {
-            this.x(x)
-            this.y(y)
+
+            val pointers = IntArray(2)
+            planetView.getLocationOnScreen(pointers)
+
+            this.x(pointers[0].toFloat())
+            this.y(pointers[1].toFloat())
 
             if (adapterPosition % 2 == 0) {
                 this.rotation(20f)
@@ -32,17 +37,23 @@ class RocketView @JvmOverloads constructor(
                 this.rotation(-20f)
             }
             this.duration = 1000
+            attachAnimationListener(this) {
+                onFinish()
+            }
+        }
+    }
 
-
-        }.setListener(object : Animator.AnimatorListener {
+    private fun attachAnimationListener(animator: ViewPropertyAnimator, onFinish: () -> Unit) {
+        animator.setListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator?) {
-                canLaunch = false
+                canExplore = false
                 setExploringPlanet(false)
             }
 
             override fun onAnimationEnd(p0: Animator?) {
-                canLaunch = true
+                canExplore = true
                 setExploringPlanet(true)
+                scalePlanet()
                 onFinish()
             }
 
@@ -57,10 +68,39 @@ class RocketView @JvmOverloads constructor(
         })
     }
 
-    private fun setExploringPlanet(isExploring : Boolean){
-        if (isExploring){
+    private fun attachToPlanet(planetView: View) {
+
+        if (currentPlanet != null) {
+            unscalePlanet()
+        }
+
+        this.currentPlanet = planetView
+    }
+
+    private fun scalePlanet() {
+        currentPlanet?.let {
+
+            it.animate().apply {
+                this.scaleXBy(.5f)
+                this.scaleYBy(.5f)
+            }
+        }
+    }
+
+    private fun unscalePlanet() {
+        currentPlanet?.let {
+
+            it.animate().apply {
+                this.scaleXBy(-.5f)
+                this.scaleYBy(-.5f)
+            }
+        }
+    }
+
+    private fun setExploringPlanet(isExploring: Boolean) {
+        if (isExploring) {
             this.setImageResource(R.drawable.ic_foguete_no_planeta)
-        }else{
+        } else {
             this.setImageResource(R.drawable.ic_foguete)
         }
     }

@@ -49,15 +49,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="32dp"
-        android:paddingVertical="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="32dp">
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="40dp"/>
+
         <ImageView
             android:id="@+id/row_holder_image"
             android:layout_width="150dp"
+            android:layout_marginStart="32dp"
             android:layout_height="150dp"
             app:srcCompat="@drawable/ic_planeta_2" />
 
@@ -67,6 +70,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             tools:text="holder name" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="40dp"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
