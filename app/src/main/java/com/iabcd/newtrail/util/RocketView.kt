@@ -5,8 +5,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewPropertyAnimator
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import com.iabcd.newtrail.R
+import com.iabcd.newtrail.model.Holder
 
 class RocketView @JvmOverloads constructor(
     context: Context,
@@ -14,14 +16,25 @@ class RocketView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
+    companion object {
+        const val PLANET_SCALE_BY = .5f
+        const val PLANET_SCALE_VALUE = 1.5f
+    }
+
     private var canExplore = true
     private var currentPlanet: View? = null
+    private var currentHolder: Holder? = null
 
-    fun animateToCoordinates(planetView: View, adapterPosition: Int, onFinish: () -> Unit) {
+    fun animateToCoordinates(
+        planetView: View,
+        adapterPosition: Int,
+        holder: Holder,
+        onFinish: () -> Unit
+    ) {
 
         if (!canExplore) return
 
-        attachToPlanet(planetView)
+        attachToPlanet(planetView, holder)
 
         this.animate().apply {
 
@@ -42,6 +55,8 @@ class RocketView @JvmOverloads constructor(
             }
         }
     }
+
+    fun getAttachedHolder() = currentHolder
 
     private fun attachAnimationListener(animator: ViewPropertyAnimator, onFinish: () -> Unit) {
         animator.setListener(object : Animator.AnimatorListener {
@@ -68,12 +83,12 @@ class RocketView @JvmOverloads constructor(
         })
     }
 
-    private fun attachToPlanet(planetView: View) {
+    private fun attachToPlanet(planetView: View, holder: Holder) {
 
         if (currentPlanet != null) {
             unscalePlanet()
         }
-
+        this.currentHolder = holder
         this.currentPlanet = planetView
     }
 
@@ -81,8 +96,8 @@ class RocketView @JvmOverloads constructor(
         currentPlanet?.let {
 
             it.animate().apply {
-                this.scaleXBy(.5f)
-                this.scaleYBy(.5f)
+                this.scaleXBy(PLANET_SCALE_BY)
+                this.scaleYBy(PLANET_SCALE_BY)
             }
         }
     }
@@ -91,8 +106,8 @@ class RocketView @JvmOverloads constructor(
         currentPlanet?.let {
 
             it.animate().apply {
-                this.scaleXBy(-.5f)
-                this.scaleYBy(-.5f)
+                this.scaleXBy(PLANET_SCALE_BY * -1)
+                this.scaleYBy(PLANET_SCALE_BY * -1)
             }
         }
     }
