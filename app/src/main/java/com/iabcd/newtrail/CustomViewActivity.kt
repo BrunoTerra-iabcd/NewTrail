@@ -2,6 +2,7 @@ package com.iabcd.newtrail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iabcd.newtrail.adapter.HolderAdapter
@@ -20,6 +21,7 @@ class CustomViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(mBinder.root)
         initRecyclerView()
+        initRocketView()
     }
 
     private fun initRecyclerView() {
@@ -29,19 +31,7 @@ class CustomViewActivity : AppCompatActivity() {
             mBinder.activityCustomViewRocketView
         ) { planetView, holder, position ->
 
-            mBinder.activityCustomViewRecyclerView.suppressLayout(true)
-
-            mBinder.activityCustomViewRocketView.animateToCoordinates(
-                planetView,
-                position,
-                holder
-            ) {
-
-                mBinder.activityCustomViewRecyclerView.suppressLayout(false)
-
-
-
-            }
+            handlePlanetClick(planetView,holder,position)
         }
 
         mBinder.activityCustomViewRecyclerView.apply {
@@ -50,14 +40,29 @@ class CustomViewActivity : AppCompatActivity() {
                 LinearLayoutManager(this@CustomViewActivity, LinearLayoutManager.VERTICAL, true)
             setHasFixedSize(true)
         }
+    }
 
-        mBinder.activityCustomViewRecyclerView.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                mBinder.activityCustomViewRocketView.y -= dy
-                mBinder.activityCustomViewImageLand.y -= dy
+    private fun initRocketView(){
+
+        mBinder.activityCustomViewRocketView.apply {
+            this.attachRecyclerView(mBinder.activityCustomViewRecyclerView)
+            this.attachScrollableItems(mBinder.activityCustomViewImageLand)
+        }
+
+    }
+
+    private fun handlePlanetClick(planetView : View, holder: Holder, position : Int){
+        mBinder.activityCustomViewRecyclerView.suppressLayout(true)
+
+        mBinder.activityCustomViewRocketView.animateToCoordinates(
+            planetView,
+            position,
+            holder
+        ) {
+            mBinder.activityCustomViewRecyclerView.suppressLayout(false)
+            mBinder.activityCustomViewRecyclerView.post {
+                mBinder.activityCustomViewRecyclerView.smoothScrollToPosition(position)
             }
-        })
+        }
     }
 }

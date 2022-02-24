@@ -19,14 +19,25 @@ class RocketView @JvmOverloads constructor(
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
     companion object {
-        const val PLANET_SCALE_BY = .5f
-        const val PLANET_SCALE_VALUE = 1.5f
+        const val PLANET_SCALE_BY = .25f
+        const val PLANET_SCALE_VALUE = .75f
     }
 
     private var canExplore = true
     private var currentPlanet: View? = null
     private var currentHolder: Holder? = null
     private var currentAdapterPosition: Int = -1
+    private var targetRecyclerView : RecyclerView? = null
+    private val scrollableItems : MutableList<View> = mutableListOf(this)
+
+    fun attachRecyclerView(recyclerView: RecyclerView){
+        this.targetRecyclerView = recyclerView
+        handleRecyclerViewEvents()
+    }
+
+    fun attachScrollableItems(vararg items : View){
+        scrollableItems.addAll(items)
+    }
 
     fun animateToCoordinates(
         planetView: View,
@@ -106,7 +117,7 @@ class RocketView @JvmOverloads constructor(
             it.animate().apply {
                 this.scaleXBy(PLANET_SCALE_BY)
                 this.scaleYBy(PLANET_SCALE_BY)
-                this.duration = 1000
+                this.duration = 800
             }
         }
     }
@@ -117,7 +128,7 @@ class RocketView @JvmOverloads constructor(
             it.animate().apply {
                 this.scaleXBy(PLANET_SCALE_BY * -1)
                 this.scaleYBy(PLANET_SCALE_BY * -1)
-                this.duration = 800
+                this.duration = 400
             }
         }
     }
@@ -128,6 +139,18 @@ class RocketView @JvmOverloads constructor(
         } else {
             this.setImageResource(R.drawable.ic_foguete)
         }
+    }
+
+    private fun handleRecyclerViewEvents(){
+        targetRecyclerView?.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                scrollableItems.forEach {
+                    it.y -= dy
+                }
+            }
+        })
     }
 
 }
