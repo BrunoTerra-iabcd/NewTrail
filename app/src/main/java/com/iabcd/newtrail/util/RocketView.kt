@@ -24,6 +24,7 @@ class RocketView @JvmOverloads constructor(
     private var canExplore = true
     private var currentPlanet: View? = null
     private var currentHolder: Holder? = null
+    private var currentAdapterPosition: Int = -1
 
     fun animateToCoordinates(
         planetView: View,
@@ -34,7 +35,7 @@ class RocketView @JvmOverloads constructor(
 
         if (!canExplore) return
 
-        attachToPlanet(planetView, holder)
+        attachToPlanet(planetView, holder, adapterPosition)
 
         this.animate().apply {
 
@@ -44,7 +45,7 @@ class RocketView @JvmOverloads constructor(
             this.x(pointers[0].toFloat())
             this.y(pointers[1].toFloat())
 
-            if (adapterPosition % 2 == 0) {
+            if (currentAdapterPosition % 2 == 0) {
                 this.rotation(20f)
             } else {
                 this.rotation(-20f)
@@ -83,12 +84,14 @@ class RocketView @JvmOverloads constructor(
         })
     }
 
-    private fun attachToPlanet(planetView: View, holder: Holder) {
+    private fun attachToPlanet(planetView: View, holder: Holder,position : Int) {
+
+        this.currentHolder = holder
+        this.currentAdapterPosition = position
 
         if (currentPlanet != null) {
             unscalePlanet()
         }
-        this.currentHolder = holder
         this.currentPlanet = planetView
     }
 
