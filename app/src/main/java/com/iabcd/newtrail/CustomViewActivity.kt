@@ -29,7 +29,12 @@ class CustomViewActivity : AppCompatActivity() {
             mBinder.activityCustomViewRecyclerView.suppressLayout(true)
 
             mBinder.activityCustomViewRocketView.animateToCoordinates(planetView,position,holder){
+
                 mBinder.activityCustomViewRecyclerView.suppressLayout(false)
+
+                mBinder.activityCustomViewRecyclerView.post {
+                    mBinder.activityCustomViewRecyclerView.smoothScrollToPosition(position)
+                }
             }
         }
 

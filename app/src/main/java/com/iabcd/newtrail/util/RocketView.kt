@@ -3,10 +3,12 @@ package com.iabcd.newtrail.util
 import android.animation.Animator
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewPropertyAnimator
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.iabcd.newtrail.R
 import com.iabcd.newtrail.model.Holder
 
@@ -59,7 +61,10 @@ class RocketView @JvmOverloads constructor(
 
     fun getAttachedHolder() = currentHolder
 
-    private fun attachAnimationListener(animator: ViewPropertyAnimator, onFinish: () -> Unit) {
+    private fun attachAnimationListener(
+        animator: ViewPropertyAnimator,
+        onFinish: () -> Unit
+    ) {
         animator.setListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator?) {
                 canExplore = false
@@ -84,7 +89,7 @@ class RocketView @JvmOverloads constructor(
         })
     }
 
-    private fun attachToPlanet(planetView: View, holder: Holder,position : Int) {
+    private fun attachToPlanet(planetView: View, holder: Holder, position: Int) {
 
         this.currentHolder = holder
         this.currentAdapterPosition = position
@@ -101,6 +106,7 @@ class RocketView @JvmOverloads constructor(
             it.animate().apply {
                 this.scaleXBy(PLANET_SCALE_BY)
                 this.scaleYBy(PLANET_SCALE_BY)
+                this.duration = 1000
             }
         }
     }
@@ -111,6 +117,7 @@ class RocketView @JvmOverloads constructor(
             it.animate().apply {
                 this.scaleXBy(PLANET_SCALE_BY * -1)
                 this.scaleYBy(PLANET_SCALE_BY * -1)
+                this.duration = 800
             }
         }
     }
