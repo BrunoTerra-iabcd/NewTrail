@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PlanetView">
+
+        <attr name="c_planet_image" format="reference"/>
+        <attr name="c_planet_planetName" format="string"/>
+        <attr name="c_planet_planetAxis" format="string"/>
+
+    </declare-styleable>
+
+
+</resources>

@@ -27,10 +27,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_satelite_fundo" />
+        app:srcCompat="@drawable/ic_satelite_fundo"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/row_holder_prop3"
@@ -38,11 +38,11 @@
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"
-        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_satelite_fundo_2" />
+        app:srcCompat="@drawable/ic_satelite_fundo_2"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/row_holder_container"
@@ -55,25 +55,18 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="40dp"/>
+            android:layout_height="90dp" />
 
-        <ImageView
-            android:id="@+id/row_holder_image"
-            android:layout_width="150dp"
-            android:layout_marginStart="32dp"
-            android:layout_height="150dp"
-            app:srcCompat="@drawable/ic_planeta_2" />
-
-        <TextView
-            android:id="@+id/row_holder_txtName"
+        <com.iabcd.newtrail.util.PlanetView
+            android:id="@+id/row_holder_planetView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="holder name" />
+            android:layout_marginStart="32dp"
+            app:c_planet_image="@drawable/ic_planeta_2" />
 
         <View
             android:layout_width="0dp"
-            android:layout_height="40dp"/>
+            android:layout_height="90dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

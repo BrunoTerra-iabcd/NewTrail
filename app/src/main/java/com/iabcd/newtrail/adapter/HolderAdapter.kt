@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.iabcd.newtrail.databinding.RowHolderBinding
 import com.iabcd.newtrail.model.Holder
+import com.iabcd.newtrail.util.PlanetView
 import com.iabcd.newtrail.util.RocketView
 import kotlin.random.Random
 
@@ -23,11 +24,13 @@ class HolderAdapter(
 
         fun bind(holder: Holder, position: Int) {
 
-            mBinder.rowHolderTxtName.text = holder.name
+            mBinder.rowHolderPlanetView.setPlanetName(holder.name)
+            mBinder.rowHolderPlanetView.setPlanetAxis("Consciência fonológica")
+
             setParentGravity(position)
             setCLickListener(holder, position)
             handleProps(position)
-            handlePlanetScaling(mBinder.rowHolderImage,holder)
+            handlePlanetScaling(mBinder.rowHolderPlanetView,holder)
         }
 
         private fun setParentGravity(position: Int) {
@@ -39,7 +42,7 @@ class HolderAdapter(
         }
 
         private fun setCLickListener(holder: Holder,position : Int) {
-            mBinder.rowHolderImage.setOnClickListener {
+            mBinder.rowHolderPlanetView.setOnClickListener {
                 onClick(it, holder,position)
             }
         }
@@ -68,7 +71,7 @@ class HolderAdapter(
 
         }
 
-        private fun handlePlanetScaling(currentPlanet : ImageView,holder : Holder){
+        private fun handlePlanetScaling(currentPlanet : PlanetView,holder : Holder){
 
             rocketView?.getAttachedHolder()?.let {
 

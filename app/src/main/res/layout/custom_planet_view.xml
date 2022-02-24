@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/custom_planet_view_imagePlanet"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_planeta_2" />
+
+    <TextView
+        android:id="@+id/custom_planet_view_txtPlanetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/custom_planet_view_imagePlanet"
+        app:layout_constraintStart_toStartOf="@+id/custom_planet_view_imagePlanet"
+        app:layout_constraintTop_toBottomOf="@+id/custom_planet_view_imagePlanet"
+        tools:text="Capivara"
+        tools:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/custom_planet_view_txtPlanetAxis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/custom_planet_view_txtPlanetName"
+        app:layout_constraintStart_toStartOf="@+id/custom_planet_view_txtPlanetName"
+        app:layout_constraintTop_toBottomOf="@+id/custom_planet_view_txtPlanetName"
+        tools:text="Consciência fonológica"
+        tools:textColor="@color/black" />
+</androidx.constraintlayout.widget.ConstraintLayout>
