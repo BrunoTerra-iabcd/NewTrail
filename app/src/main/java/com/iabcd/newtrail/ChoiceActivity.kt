@@ -27,5 +27,9 @@ class ChoiceActivity : AppCompatActivity() {
             startActivity(Intent(this,ComposeActivity::class.java))
         }
 
+        mBinder.button5.setOnClickListener {
+            startActivity(Intent(this,MotionActivity::class.java))
+        }
+
     }
 }

@@ -24,17 +24,23 @@ class CustomViewActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
 
-        mAdapter = HolderAdapter(Holder.generateValues(),mBinder.activityCustomViewRocketView) { planetView, holder, position ->
+        mAdapter = HolderAdapter(
+            Holder.generateValues(),
+            mBinder.activityCustomViewRocketView
+        ) { planetView, holder, position ->
 
             mBinder.activityCustomViewRecyclerView.suppressLayout(true)
 
-            mBinder.activityCustomViewRocketView.animateToCoordinates(planetView,position,holder){
+            mBinder.activityCustomViewRocketView.animateToCoordinates(
+                planetView,
+                position,
+                holder
+            ) {
 
                 mBinder.activityCustomViewRecyclerView.suppressLayout(false)
 
-                mBinder.activityCustomViewRecyclerView.post {
-                    mBinder.activityCustomViewRecyclerView.smoothScrollToPosition(position)
-                }
+
+
             }
         }
 
