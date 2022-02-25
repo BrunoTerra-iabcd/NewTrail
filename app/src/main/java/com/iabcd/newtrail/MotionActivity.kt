@@ -34,6 +34,7 @@ class MotionActivity : AppCompatActivity() {
 
                 mBinder.rocketView.animateToCoordinates(planetView,motionLayout,position,holder){
                     mBinder.recyclerView2.suppressLayout(false)
+                    mBinder.recyclerView2.smoothScrollToPosition(position)
                 }
             }
 
@@ -44,6 +45,7 @@ class MotionActivity : AppCompatActivity() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 mBinder.rocketView.y -= dy
+                mBinder.imageView3.y -= dy
             }
         })
 
