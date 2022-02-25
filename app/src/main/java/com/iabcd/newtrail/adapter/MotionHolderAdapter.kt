@@ -10,9 +10,12 @@ import com.google.android.material.transition.Hold
 import com.iabcd.newtrail.databinding.RowHolderMotionLeftBinding
 import com.iabcd.newtrail.databinding.RowHolderMotionRightBinding
 import com.iabcd.newtrail.model.Holder
+import com.iabcd.newtrail.util.MotionRocketView
+import com.iabcd.newtrail.util.RocketView
 
 class MotionHolderAdapter(
     private val items: List<Holder>,
+    private val rocketView: MotionRocketView,
     private val onClick: (View, Holder, Int,MotionLayout) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -46,6 +49,19 @@ class MotionHolderAdapter(
 
                 else -> throw Exception("Invalid row")
             }
+
+            handlePlanetAnimationRecycle(position)
+
+        }
+
+        private fun handlePlanetAnimationRecycle(position: Int){
+
+            if (rocketView.getCurrentAttachedPosition() == position){
+                (mBinder.root as MotionLayout).transitionToEnd()
+            }else{
+                (mBinder.root as MotionLayout).transitionToStart()
+            }
+
         }
     }
 

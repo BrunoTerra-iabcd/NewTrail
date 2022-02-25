@@ -62,6 +62,7 @@ class MotionRocketView @JvmOverloads constructor(
     }
 
     fun getAttachedHolder() = currentHolder
+    fun getCurrentAttachedPosition() = currentAdapterPosition
 
     private fun attachAnimationListener(
         animator: ViewPropertyAnimator,

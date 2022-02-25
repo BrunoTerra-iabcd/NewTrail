@@ -28,7 +28,7 @@ class MotionActivity : AppCompatActivity() {
 
             this.setHasFixedSize(false)
             this.layoutManager = LinearLayoutManager(this@MotionActivity,LinearLayoutManager.VERTICAL,true)
-            this.adapter = MotionHolderAdapter(Holder.generateValues()){planetView, holder, position,motionLayout ->
+            this.adapter = MotionHolderAdapter(Holder.generateValues(),mBinder.rocketView){planetView, holder, position,motionLayout ->
 
                 mBinder.recyclerView2.suppressLayout(true)
 
