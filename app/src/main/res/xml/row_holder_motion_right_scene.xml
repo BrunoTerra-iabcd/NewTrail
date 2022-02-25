@@ -14,7 +14,7 @@
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
-            android:id="@+id/imageView3"
+            android:id="@+id/row_golder_motion_imagePlanet"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -31,6 +31,6 @@
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="220dp"
             motion:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/imageView3" />
+            android:id="@+id/row_golder_motion_imagePlanet" />
     </ConstraintSet>
 </MotionScene>

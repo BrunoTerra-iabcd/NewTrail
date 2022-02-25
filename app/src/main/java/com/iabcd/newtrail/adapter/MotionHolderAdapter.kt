@@ -22,33 +22,6 @@ class MotionHolderAdapter(
         const val TYPE_RIGHT = 1
     }
 
-    inner class MotionHolderLeftViewHolder(private val mBinder: RowHolderMotionLeftBinding) :
-        RecyclerView.ViewHolder(mBinder.root) {
-
-            fun bind(holder: Holder,position: Int){
-
-                mBinder.textView2.text = holder.name
-
-                mBinder.imageView3.setOnClickListener {
-                    onClick(it,holder,position,mBinder.root)
-                }
-            }
-
-    }
-
-    inner class MotionHolderRightViewHolder(private val mBinder: RowHolderMotionRightBinding) :
-        RecyclerView.ViewHolder(mBinder.root) {
-
-        fun bind(holder: Holder,position: Int){
-
-            mBinder.textView2.text = holder.name
-
-            mBinder.imageView3.setOnClickListener {
-                onClick(it,holder,position,mBinder.root)
-            }
-        }
-    }
-
     inner class MotionViewHolder (private val mBinder : ViewBinding) : RecyclerView.ViewHolder(mBinder.root){
 
         fun bind(holder: Holder,position: Int){
@@ -56,17 +29,17 @@ class MotionHolderAdapter(
             when(mBinder){
 
                 is RowHolderMotionLeftBinding ->{
-                    mBinder.textView2.text = holder.name
+                    mBinder.rowGolderMotionTxtName.text = holder.name
 
-                    mBinder.imageView3.setOnClickListener {
+                    mBinder.rowGolderMotionImagePlanet.setOnClickListener {
                         onClick(it,holder,position,mBinder.root)
                     }
                 }
 
                 is RowHolderMotionRightBinding ->{
-                    mBinder.textView2.text = holder.name
+                    mBinder.rowGolderMotionTxtName.text = holder.name
 
-                    mBinder.imageView3.setOnClickListener {
+                    mBinder.rowGolderMotionImagePlanet.setOnClickListener {
                         onClick(it,holder,position,mBinder.root)
                     }
                 }
