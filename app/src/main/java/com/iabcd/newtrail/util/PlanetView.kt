@@ -51,6 +51,18 @@ class PlanetView @JvmOverloads constructor(
         mBinder.customPlanetViewTxtPlanetAxis.text =
             attrs.getString(R.styleable.PlanetView_c_planet_planetAxis)
 
+        adjustPlanetSize(attrs.getDimension(R.styleable.PlanetView_c_planet_planetSize,-1f))
+
+    }
+
+    private fun adjustPlanetSize(size : Float){
+
+        if (size <0) return
+
+        val params = mBinder.customPlanetViewImagePlanet.layoutParams
+        params.height = size.toInt()
+        params.width = size.toInt()
+        mBinder.customPlanetViewImagePlanet.layoutParams = params
 
     }
 }

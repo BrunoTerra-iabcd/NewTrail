@@ -59,6 +59,7 @@
         <com.iabcd.newtrail.util.PlanetView
             android:id="@+id/row_holder_planetView"
             android:layout_width="wrap_content"
+            app:c_planet_planetSize="150dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             app:c_planet_image="@drawable/ic_planeta_2"
