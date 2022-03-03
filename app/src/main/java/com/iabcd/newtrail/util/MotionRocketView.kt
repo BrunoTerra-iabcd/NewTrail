@@ -20,19 +20,17 @@ class MotionRocketView @JvmOverloads constructor(
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
     private var canExplore = true
-    private var currentMotionLayout: MotionLayout? = null
     private var currentAdapterPosition: Int = -1
 
     fun animateToCoordinates(
         planetView: View,
-        motionLayout: MotionLayout,
         adapterPosition: Int,
         onFinish: () -> Unit
     ) {
 
         if (!canExplore) return
 
-        attachToPlanet(adapterPosition, motionLayout)
+        this.currentAdapterPosition = adapterPosition
 
         this.animate().apply {
 
@@ -69,7 +67,6 @@ class MotionRocketView @JvmOverloads constructor(
             override fun onAnimationEnd(p0: Animator?) {
                 canExplore = true
                 setExploringPlanet(true)
-                scalePlanet()
                 onFinish()
             }
 
@@ -83,25 +80,6 @@ class MotionRocketView @JvmOverloads constructor(
 
         })
     }
-
-    private fun attachToPlanet(
-        position: Int,
-        motionLayout: MotionLayout
-    ) {
-
-        this.currentAdapterPosition = position
-
-        unscalePlanet()
-        this.currentMotionLayout = motionLayout
-    }
-
-    private fun scalePlanet() {
-        currentMotionLayout?.transitionToEnd()
-     }
-
-     private fun unscalePlanet() {
-         currentMotionLayout?.transitionToStart()
-     }
 
     private fun setExploringPlanet(isExploring: Boolean) {
         if (isExploring) {

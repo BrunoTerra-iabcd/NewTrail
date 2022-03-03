@@ -1,18 +1,16 @@
 package com.iabcd.newtrail.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.google.android.material.transition.Hold
 import com.iabcd.newtrail.databinding.RowHolderMotionLeftBinding
 import com.iabcd.newtrail.databinding.RowHolderMotionRightBinding
 import com.iabcd.newtrail.model.Holder
 import com.iabcd.newtrail.util.MotionRocketView
-import com.iabcd.newtrail.util.RocketView
-import kotlin.reflect.KClass
 
 class MotionHolderAdapter(
     private val items: List<Holder>,
@@ -67,12 +65,12 @@ class MotionHolderAdapter(
 
         private fun handlePlanetAnimationRecycle(position: Int){
 
-            if (rocketView.getCurrentAttachedPosition() == position){
-                (mBinder.root as MotionLayout).transitionToEnd()
-            }else{
-                (mBinder.root as MotionLayout).transitionToStart()
-            }
+            when(position) {
 
+                rocketView.getCurrentAttachedPosition() -> (mBinder.root as MotionLayout).transitionToEnd()
+                else -> (mBinder.root as MotionLayout).transitionToStart()
+
+            }
         }
     }
 

@@ -16,6 +16,7 @@ import com.iabcd.newtrail.databinding.ActivityMotion3Binding
 import com.iabcd.newtrail.databinding.RowHolderMotionLeftBinding
 import com.iabcd.newtrail.databinding.RowHolderMotionRightBinding
 import com.iabcd.newtrail.model.Holder
+import com.iabcd.newtrail.util.MotionHandler
 import com.iabcd.newtrail.util.PlanetView
 import kotlinx.coroutines.delay
 
@@ -24,6 +25,7 @@ class MotionActivity : AppCompatActivity() {
     private val mBinder by lazy {
         ActivityMotion3Binding.inflate(layoutInflater)
     }
+    private val motionHandler = MotionHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +46,7 @@ class MotionActivity : AppCompatActivity() {
                 mBinder.rocketView
             ) { planetView, holder, position, motionLayout, operation ->
 
-                handleClickOperation(operation, planetView, motionLayout, position, holder)
+                handleClickOperation(operation, planetView, motionLayout, position)
 
             }
 
@@ -66,7 +68,6 @@ class MotionActivity : AppCompatActivity() {
         planetView: View,
         motionRoot: MotionLayout,
         position: Int,
-        holder: Holder
     ) {
 
         when (operation) {
@@ -76,12 +77,11 @@ class MotionActivity : AppCompatActivity() {
 
                 mBinder.rocketView.animateToCoordinates(
                     planetView,
-                    motionRoot,
                     position,
-                    holder
                 ) {
                     mBinder.recyclerView2.suppressLayout(false)
                     mBinder.recyclerView2.smoothScrollToPosition(position)
+                    motionHandler.scalePlanet(motionRoot)
                 }
             }
 
