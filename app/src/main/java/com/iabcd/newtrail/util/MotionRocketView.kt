@@ -21,20 +21,18 @@ class MotionRocketView @JvmOverloads constructor(
 
     private var canExplore = true
     private var currentMotionLayout: MotionLayout? = null
-    private var currentHolder: Holder? = null
     private var currentAdapterPosition: Int = -1
 
     fun animateToCoordinates(
         planetView: View,
         motionLayout: MotionLayout,
         adapterPosition: Int,
-        holder: Holder,
         onFinish: () -> Unit
     ) {
 
         if (!canExplore) return
 
-        attachToPlanet(planetView, holder, adapterPosition, motionLayout)
+        attachToPlanet(adapterPosition, motionLayout)
 
         this.animate().apply {
 
@@ -56,7 +54,6 @@ class MotionRocketView @JvmOverloads constructor(
         }
     }
 
-    fun getAttachedHolder() = currentHolder
     fun getCurrentAttachedPosition() = currentAdapterPosition
 
     private fun attachAnimationListener(
@@ -88,13 +85,10 @@ class MotionRocketView @JvmOverloads constructor(
     }
 
     private fun attachToPlanet(
-        planetView: View,
-        holder: Holder,
         position: Int,
         motionLayout: MotionLayout
     ) {
 
-        this.currentHolder = holder
         this.currentAdapterPosition = position
 
         unscalePlanet()
@@ -116,5 +110,4 @@ class MotionRocketView @JvmOverloads constructor(
             this.setImageResource(R.drawable.ic_foguete)
         }
     }
-
 }
