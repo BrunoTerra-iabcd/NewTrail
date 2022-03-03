@@ -19,11 +19,6 @@ class MotionRocketView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
-    companion object {
-        const val PLANET_SCALE_BY = .5f
-        const val PLANET_SCALE_VALUE = 1.5f
-    }
-
     private var canExplore = true
     private var currentMotionLayout: MotionLayout? = null
     private var currentHolder: Holder? = null

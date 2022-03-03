@@ -12,17 +12,22 @@ import com.iabcd.newtrail.databinding.RowHolderMotionRightBinding
 import com.iabcd.newtrail.model.Holder
 import com.iabcd.newtrail.util.MotionRocketView
 import com.iabcd.newtrail.util.RocketView
+import kotlin.reflect.KClass
 
 class MotionHolderAdapter(
     private val items: List<Holder>,
     private val rocketView: MotionRocketView,
-    private val onClick: (View, Holder, Int,MotionLayout) -> Unit
+    private val onClick: (View, Holder, Int,MotionLayout,operation : Int) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        const val TYPE_LEFT = 0
-        const val TYPE_RIGHT = 1
+        private const val TYPE_LEFT = 0
+        private const val TYPE_RIGHT = 1
+
+        const val OP_PLANET = 0
+        const val OP_NEXT = 1
+        const val OP_REPEAT = 2
     }
 
     inner class MotionViewHolder (private val mBinder : ViewBinding) : RecyclerView.ViewHolder(mBinder.root){
@@ -35,18 +40,24 @@ class MotionHolderAdapter(
                     mBinder.rowGolderMotionTxtName.text = holder.name
 
                     mBinder.rowGolderMotionImagePlanet.setOnClickListener {
-                        onClick(it,holder,position,mBinder.root)
+                        onClick(it,holder,position,mBinder.root, OP_PLANET)
+                    }
+
+                    mBinder.button10.setOnClickListener {
+                        onClick(it,holder,position,mBinder.root, OP_NEXT)
                     }
                 }
-
                 is RowHolderMotionRightBinding ->{
                     mBinder.rowGolderMotionTxtName.text = holder.name
 
                     mBinder.rowGolderMotionImagePlanet.setOnClickListener {
-                        onClick(it,holder,position,mBinder.root)
+                        onClick(it,holder,position,mBinder.root, OP_PLANET)
+                    }
+
+                    mBinder.button10.setOnClickListener {
+                        onClick(it,holder,position,mBinder.root, OP_NEXT)
                     }
                 }
-
                 else -> throw Exception("Invalid row")
             }
 
