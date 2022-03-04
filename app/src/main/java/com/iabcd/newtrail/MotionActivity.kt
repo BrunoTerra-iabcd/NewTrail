@@ -2,23 +2,14 @@ package com.iabcd.newtrail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.core.view.get
-import androidx.lifecycle.lifecycleScope
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
-import com.iabcd.newtrail.adapter.HolderAdapter
 import com.iabcd.newtrail.adapter.MotionHolderAdapter
 import com.iabcd.newtrail.databinding.ActivityMotion3Binding
-import com.iabcd.newtrail.databinding.RowHolderMotionLeftBinding
-import com.iabcd.newtrail.databinding.RowHolderMotionRightBinding
 import com.iabcd.newtrail.model.Holder
-import com.iabcd.newtrail.util.MotionHandler
-import com.iabcd.newtrail.util.PlanetView
-import kotlinx.coroutines.delay
+import com.iabcd.newtrail.util.motion.MotionClickResponse
+import com.iabcd.newtrail.util.motion.MotionHandler
 
 class MotionActivity : AppCompatActivity() {
 
@@ -44,12 +35,11 @@ class MotionActivity : AppCompatActivity() {
             this.adapter = MotionHolderAdapter(
                 Holder.generateValues(),
                 mBinder.rocketView
-            ) { planetView, holder, position, motionLayout, operation ->
+            ) { motionClickResponse : MotionClickResponse ->
 
-                handleClickOperation(operation, planetView, motionLayout, position)
+                handleClickOperation(motionClickResponse)
 
             }
-
         }
 
         mBinder.recyclerView2.addOnScrollListener(object :
@@ -63,30 +53,29 @@ class MotionActivity : AppCompatActivity() {
     }
 
     private fun handleClickOperation(
-        operation: Int,
-        planetView: View,
-        motionRoot: MotionLayout,
-        position: Int,
+        response: MotionClickResponse
     ) {
 
-        when (operation) {
+        when (response.operationType) {
 
             MotionHolderAdapter.OP_PLANET -> {
-                if (mBinder.rocketView.getCurrentAttachedPosition() == position) return
+                if (mBinder.rocketView.getCurrentAttachedPosition() == response.adapterPosition) return
                 mBinder.recyclerView2.suppressLayout(true)
 
                 mBinder.rocketView.animateToCoordinates(
-                    planetView,
-                    position,
+                    response.clickedView,
+                    response.adapterPosition,
                 ) {
                     mBinder.recyclerView2.suppressLayout(false)
-                    mBinder.recyclerView2.smoothScrollToPosition(position)
-                    motionHandler.scalePlanet(motionRoot)
+                    mBinder.recyclerView2.smoothScrollToPosition(response.adapterPosition)
+                    motionHandler.scalePlanet(response.currentMotionLayout){
+                        Log.i("Porsche", "handleClickOperation: hehe")
+                    }
                 }
             }
 
             MotionHolderAdapter.OP_NEXT -> {
-                mBinder.recyclerView2.smoothScrollToPosition(position + 1)
+                mBinder.recyclerView2.smoothScrollToPosition(response.adapterPosition + 1)
 
             }
 

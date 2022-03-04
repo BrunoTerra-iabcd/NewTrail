@@ -34,7 +34,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_end="132dp" />
 
-    <com.iabcd.newtrail.util.MotionRocketView
+    <com.iabcd.newtrail.util.motion.MotionRocketView
         android:id="@+id/rocketView"
         android:layout_width="60dp"
         android:layout_height="60dp"

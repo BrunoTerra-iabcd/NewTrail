@@ -1,7 +1,6 @@
 package com.iabcd.newtrail.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -13,12 +12,13 @@ import com.iabcd.newtrail.R
 import com.iabcd.newtrail.databinding.RowHolderMotionLeftBinding
 import com.iabcd.newtrail.databinding.RowHolderMotionRightBinding
 import com.iabcd.newtrail.model.Holder
-import com.iabcd.newtrail.util.MotionRocketView
+import com.iabcd.newtrail.util.motion.MotionClickResponse
+import com.iabcd.newtrail.util.motion.MotionRocketView
 
 class MotionHolderAdapter(
     private val items: List<Holder>,
     private val rocketView: MotionRocketView,
-    private val onClick: (View, Holder, Int, MotionLayout, operation: Int) -> Unit
+    private val onClick: (MotionClickResponse) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -39,10 +39,23 @@ class MotionHolderAdapter(
             mBinder.root.findViewById<TextView>(R.id.row_golder_motion_txtName).text = holder.name
             mBinder.root.findViewById<ImageView>(R.id.row_golder_motion_imagePlanet)
                 .setOnClickListener {
-                    onClick(it, holder, position, mBinder.root as MotionLayout, OP_PLANET)
+                    onClick(
+                        MotionClickResponse(
+                            it, holder,
+                            position, mBinder.root as MotionLayout, OP_PLANET
+                        )
+                    )
                 }
             mBinder.root.findViewById<Button>(R.id.button10).setOnClickListener {
-                onClick(it, holder, position, mBinder.root as MotionLayout, OP_NEXT)
+                onClick(
+                    MotionClickResponse(
+                        it,
+                        holder,
+                        position,
+                        mBinder.root as MotionLayout,
+                        OP_NEXT
+                    )
+                )
             }
 
             handlePlanetAnimationRecycle(position)
@@ -76,9 +89,7 @@ class MotionHolderAdapter(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )
-
         }
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

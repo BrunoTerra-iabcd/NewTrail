@@ -1,17 +1,12 @@
-package com.iabcd.newtrail.util
+package com.iabcd.newtrail.util.motion
 
 import android.animation.Animator
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.ViewPropertyAnimator
-import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.recyclerview.widget.RecyclerView
 import com.iabcd.newtrail.R
-import com.iabcd.newtrail.model.Holder
 
 class MotionRocketView @JvmOverloads constructor(
     context: Context,
