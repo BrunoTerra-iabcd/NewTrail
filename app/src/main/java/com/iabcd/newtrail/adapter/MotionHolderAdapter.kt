@@ -1,12 +1,15 @@
 package com.iabcd.newtrail.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.iabcd.newtrail.R
 import com.iabcd.newtrail.databinding.RowHolderMotionLeftBinding
 import com.iabcd.newtrail.databinding.RowHolderMotionRightBinding
 import com.iabcd.newtrail.model.Holder
@@ -15,7 +18,7 @@ import com.iabcd.newtrail.util.MotionRocketView
 class MotionHolderAdapter(
     private val items: List<Holder>,
     private val rocketView: MotionRocketView,
-    private val onClick: (View, Holder, Int,MotionLayout,operation : Int) -> Unit
+    private val onClick: (View, Holder, Int, MotionLayout, operation: Int) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -28,44 +31,26 @@ class MotionHolderAdapter(
         const val OP_REPEAT = 2
     }
 
-    inner class MotionViewHolder (private val mBinder : ViewBinding) : RecyclerView.ViewHolder(mBinder.root){
+    inner class MotionViewHolder(private val mBinder: ViewBinding) :
+        RecyclerView.ViewHolder(mBinder.root) {
 
-        fun bind(holder: Holder,position: Int){
+        fun bind(holder: Holder, position: Int) {
 
-            when(mBinder){
-
-                is RowHolderMotionLeftBinding ->{
-                    mBinder.rowGolderMotionTxtName.text = holder.name
-
-                    mBinder.rowGolderMotionImagePlanet.setOnClickListener {
-                        onClick(it,holder,position,mBinder.root, OP_PLANET)
-                    }
-
-                    mBinder.button10.setOnClickListener {
-                        onClick(it,holder,position,mBinder.root, OP_NEXT)
-                    }
+            mBinder.root.findViewById<TextView>(R.id.row_golder_motion_txtName).text = holder.name
+            mBinder.root.findViewById<ImageView>(R.id.row_golder_motion_imagePlanet)
+                .setOnClickListener {
+                    onClick(it, holder, position, mBinder.root as MotionLayout, OP_PLANET)
                 }
-                is RowHolderMotionRightBinding ->{
-                    mBinder.rowGolderMotionTxtName.text = holder.name
-
-                    mBinder.rowGolderMotionImagePlanet.setOnClickListener {
-                        onClick(it,holder,position,mBinder.root, OP_PLANET)
-                    }
-
-                    mBinder.button10.setOnClickListener {
-                        onClick(it,holder,position,mBinder.root, OP_NEXT)
-                    }
-                }
-                else -> throw Exception("Invalid row")
+            mBinder.root.findViewById<Button>(R.id.button10).setOnClickListener {
+                onClick(it, holder, position, mBinder.root as MotionLayout, OP_NEXT)
             }
 
             handlePlanetAnimationRecycle(position)
-
         }
 
-        private fun handlePlanetAnimationRecycle(position: Int){
+        private fun handlePlanetAnimationRecycle(position: Int) {
 
-            when(position) {
+            when (position) {
 
                 rocketView.getCurrentAttachedPosition() -> (mBinder.root as MotionLayout).transitionToEnd()
                 else -> (mBinder.root as MotionLayout).transitionToStart()
