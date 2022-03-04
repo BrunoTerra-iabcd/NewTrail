@@ -60,7 +60,6 @@ class MotionActivity : AppCompatActivity() {
                 mBinder.imageView3.y -= dy
             }
         })
-
     }
 
     private fun handleClickOperation(
@@ -73,6 +72,7 @@ class MotionActivity : AppCompatActivity() {
         when (operation) {
 
             MotionHolderAdapter.OP_PLANET -> {
+                if (mBinder.rocketView.getCurrentAttachedPosition() == position) return
                 mBinder.recyclerView2.suppressLayout(true)
 
                 mBinder.rocketView.animateToCoordinates(

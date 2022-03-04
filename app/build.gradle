@@ -76,4 +76,7 @@ dependencies {
 
     //Coroutines + flow
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+
+    //https://github.com/williamyyu/SimpleRatingBar
+    implementation 'com.github.ome450901:SimpleRatingBar:1.5.1'
 }
